@@ -33,7 +33,7 @@ public class BidListController {
     if (!result.hasErrors()) {
       bidListRepository.save(bid);
       model.addAttribute("bids", bidListRepository.findAll());
-      return "bidList/list";
+      return "redirect:bidList/list";
     }
     return "bidList/add";
   }
@@ -41,7 +41,11 @@ public class BidListController {
   @GetMapping("/bidList/update/{id}")
   public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
     // TODO: get Bid by Id and to model then show to the form
-    model.addAttribute("bidUpdated", bidListRepository.findById(id).get());
+    BidList bid =
+        bidListRepository
+            .findById(id)
+            .orElseThrow(() -> new IllegalArgumentException("Bid id invalid:" + id));
+    model.addAttribute("bidUpdated", bid);
     return "bidList/update";
   }
 
@@ -55,7 +59,11 @@ public class BidListController {
   @GetMapping("/bidList/delete/{id}")
   public String deleteBid(@PathVariable("id") Integer id, Model model) {
     // TODO: Find Bid by Id and delete the bid, return to Bid list
-    bidListRepository.delete(bidListRepository.findById(id).get());
+    BidList bid =
+        bidListRepository
+            .findById(id)
+            .orElseThrow(() -> new IllegalArgumentException("Bid id invalid:" + id));
+    bidListRepository.delete(bid);
     return "redirect:/bidList/list";
   }
 }
