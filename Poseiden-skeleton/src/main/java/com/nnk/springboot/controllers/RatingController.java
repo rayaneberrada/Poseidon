@@ -33,14 +33,13 @@ public class RatingController {
     if (!result.hasErrors()) {
       ratingRepository.save(rating);
       model.addAttribute("ratings", ratingRepository.findAll());
-      return "redirect:rating/list";
+      return "redirect:/rating/list";
     }
     return "rating/add";
   }
 
   @GetMapping("/rating/update/{id}")
   public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
-    // TODO: get Rating by Id and to model then show to the form
     Rating rating =
         ratingRepository
             .findById(id)
@@ -53,12 +52,18 @@ public class RatingController {
   public String updateRating(
       @PathVariable("id") Integer id, @Valid Rating rating, BindingResult result, Model model) {
     // TODO: check required fields, if valid call service to update Rating and return Rating list
+    if (result.hasErrors()) {
+      return "rating/update";
+    }
+
+    rating.setId(id);
+    ratingRepository.save(rating);
+    model.addAttribute("ratings", ratingRepository.findAll());
     return "redirect:/rating/list";
   }
 
   @GetMapping("/rating/delete/{id}")
   public String deleteRating(@PathVariable("id") Integer id, Model model) {
-    // TODO: Find Rating by Id and delete the Rating, return to Rating list
     Rating rating =
         ratingRepository
             .findById(id)

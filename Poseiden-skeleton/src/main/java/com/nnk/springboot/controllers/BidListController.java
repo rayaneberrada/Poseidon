@@ -1,6 +1,7 @@
 package com.nnk.springboot.controllers;
 
 import com.nnk.springboot.domain.BidList;
+import com.nnk.springboot.domain.User;
 import com.nnk.springboot.repositories.BidListRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -33,37 +34,42 @@ public class BidListController {
     if (!result.hasErrors()) {
       bidListRepository.save(bid);
       model.addAttribute("bids", bidListRepository.findAll());
-      return "redirect:bidList/list";
+      return "redirect:/bidList/list";
     }
     return "bidList/add";
   }
 
   @GetMapping("/bidList/update/{id}")
   public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
-    // TODO: get Bid by Id and to model then show to the form
     BidList bid =
         bidListRepository
             .findById(id)
             .orElseThrow(() -> new IllegalArgumentException("Bid id invalid:" + id));
-    model.addAttribute("bidUpdated", bid);
+    model.addAttribute("bidList", bid);
     return "bidList/update";
   }
 
   @PostMapping("/bidList/update/{id}")
   public String updateBid(
       @PathVariable("id") Integer id, @Valid BidList bidList, BindingResult result, Model model) {
-    // TODO: check required fields, if valid call service to update Bid and return list Bid
+    if (result.hasErrors()) {
+      return "bidlist/update";
+    }
+
+    bidList.setBidListId(id);
+    bidListRepository.save(bidList);
+    model.addAttribute("bids", bidListRepository.findAll());
     return "redirect:/bidList/list";
   }
 
   @GetMapping("/bidList/delete/{id}")
-  public String deleteBid(@PathVariable("id") Integer id, Model model) {
-    // TODO: Find Bid by Id and delete the bid, return to Bid list
+  public String deleteUser(@PathVariable("id") Integer id, Model model) {
     BidList bid =
         bidListRepository
             .findById(id)
-            .orElseThrow(() -> new IllegalArgumentException("Bid id invalid:" + id));
+            .orElseThrow(() -> new IllegalArgumentException("Invalid bid Id:" + id));
     bidListRepository.delete(bid);
+    model.addAttribute("bids", bidListRepository.findAll());
     return "redirect:/bidList/list";
   }
 }

@@ -33,14 +33,13 @@ public class CurveController {
     if (!result.hasErrors()) {
       curvePointRepository.save(curvePoint);
       model.addAttribute("curvePoints", curvePointRepository.findAll());
-      return "redirect:curvePoint/list";
+      return "redirect:/curvePoint/list";
     }
     return "curvePoint/add";
   }
 
   @GetMapping("/curvePoint/update/{id}")
   public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
-    // TODO: get CurvePoint by Id and to model then show to the form
     CurvePoint curvePoint =
         curvePointRepository
             .findById(id)
@@ -55,7 +54,13 @@ public class CurveController {
       @Valid CurvePoint curvePoint,
       BindingResult result,
       Model model) {
-    // TODO: check required fields, if valid call service to update Curve and return Curve list
+    if (result.hasErrors()) {
+      return "curvePoints/update";
+    }
+
+    curvePoint.setId(id);
+    curvePointRepository.save(curvePoint);
+    model.addAttribute("curvePoints", curvePointRepository.findAll());
     return "redirect:/curvePoint/list";
   }
 
