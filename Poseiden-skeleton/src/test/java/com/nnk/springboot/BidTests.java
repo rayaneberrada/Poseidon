@@ -6,21 +6,29 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
+@DataJpaTest
 @RunWith(SpringRunner.class)
-@SpringBootTest
+@ActiveProfiles("test")
 public class BidTests {
 
-  @Autowired private BidListRepository bidListRepository;
+  @Autowired BidListRepository bidListRepository;
 
-  // @Test
+  @Test
   public void bidListTest() {
     BidList bid = new BidList();
+    bid.setAccount("Account Test");
+    bid.setType("Type Test");
+    bid.setBidQuantity(10d);
 
     // Save
     bid = bidListRepository.save(bid);

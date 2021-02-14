@@ -21,6 +21,7 @@ public class RuleTests {
   @Test
   public void ruleTest() {
     RuleName rule = new RuleName();
+    rule.setName("Rule Name");
 
     // Save
     rule = ruleNameRepository.save(rule);

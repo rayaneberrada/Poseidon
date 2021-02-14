@@ -21,6 +21,7 @@ public class RatingTests {
   @Test
   public void ratingTest() {
     Rating rating = new Rating();
+    rating.setOrderNumber(10);
 
     // Save
     rating = ratingRepository.save(rating);

@@ -18,9 +18,10 @@ public class CurvePointTests {
 
   @Autowired private CurvePointRepository curvePointRepository;
 
-  // @Test
+  @Test
   public void curvePointTest() {
     CurvePoint curvePoint = new CurvePoint();
+    curvePoint.setCurveId(10);
 
     // Save
     curvePoint = curvePointRepository.save(curvePoint);
