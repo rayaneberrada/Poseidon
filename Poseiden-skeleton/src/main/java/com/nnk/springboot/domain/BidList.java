@@ -27,10 +27,10 @@ public class BidList {
 
   String account;
   String type;
-  @NumericFieldConstraint Double bidQuantity;
-  @NumericFieldConstraint Double askQuantity;
-  @NumericFieldConstraint Double bid;
-  @NumericFieldConstraint Double ask;
+  Double bidQuantity;
+  Double askQuantity;
+  Double bid;
+  Double ask;
   String benchmark;
   Timestamp bidListDate;
   String commentary;

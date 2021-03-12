@@ -21,6 +21,12 @@ public class TradeController {
 
   private static Logger logger = LoggerFactory.getLogger(TradeController.class);
 
+  /**
+   * Method display a view containing a list of all trades
+   *
+   * @param model
+   * @return trade/list view
+   */
   @RequestMapping("/trade/list")
   public String home(Model model) {
     logger.info("http://localhost:8080/trade/list");
@@ -28,12 +34,25 @@ public class TradeController {
     return "trade/list";
   }
 
+  /**
+   * @param bid
+   * @return view to add trade's in db
+   */
   @GetMapping("/trade/add")
   public String addUser(Trade bid) {
     logger.info("http://localhost:8080/trade/add");
     return "trade/add";
   }
 
+  /**
+   * Method add trade in database if User creation respect constraints defined in the class, else
+   * return the view to add a new trade with an error message
+   *
+   * @param trade
+   * @param result
+   * @param model
+   * @return view /trade/list if success, else view trade/add
+   */
   @PostMapping("/trade/validate")
   public String validate(@Valid Trade trade, BindingResult result, Model model) {
     logger.info("http://localhost:8080/trade/validate");
@@ -56,6 +75,16 @@ public class TradeController {
     return "trade/update";
   }
 
+  /**
+   * Method modify trade informations in database and return the view of the list of trades with the
+   * modifications if success, else return the update page with an error message
+   *
+   * @param id
+   * @param trade
+   * @param result
+   * @param model
+   * @return trade/update view if fails, else /trade/list view
+   */
   @PostMapping("/trade/update/{id}")
   public String updateTrade(
       @PathVariable("id") Integer id, @Valid Trade trade, BindingResult result, Model model) {
@@ -70,6 +99,13 @@ public class TradeController {
     return "redirect:/trade/list";
   }
 
+  /**
+   * Method delete trade defined by it's id
+   *
+   * @param id
+   * @param model
+   * @return /trade/list view updated
+   */
   @GetMapping("/trade/delete/{id}")
   public String deleteTrade(@PathVariable("id") Integer id, Model model) {
     logger.info("http://localhost:8080/trade/delete/" + id);

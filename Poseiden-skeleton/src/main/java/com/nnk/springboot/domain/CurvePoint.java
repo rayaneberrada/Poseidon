@@ -23,9 +23,9 @@ public class CurvePoint {
   @Id
   Integer id;
 
-  @NumericFieldConstraint Integer curveId;
+  Integer curveId;
   Timestamp asOfDate;
-  @NumericFieldConstraint Double term;
-  @NumericFieldConstraint Double value;
+  Double term;
+  Double value;
   Timestamp creationDate;
 }

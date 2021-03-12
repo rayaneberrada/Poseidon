@@ -1,13 +1,13 @@
 package com.nnk.springboot.controllers.constraint;
 
-import com.nnk.springboot.controllers.validators.NumericalFieldValidator;
+import com.nnk.springboot.controllers.validators.PasswordFieldValidator;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
 import java.lang.annotation.*;
 
 @Documented
-@Constraint(validatedBy = NumericalFieldValidator.class)
+@Constraint(validatedBy = PasswordFieldValidator.class)
 @Target({ElementType.METHOD, ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface PasswordFieldConstraint {

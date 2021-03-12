@@ -23,10 +23,10 @@ public class Trade {
 
   String account;
   String type;
-  @NumericFieldConstraint Double buyQuantity;
-  @NumericFieldConstraint Double sellQuantity;
-  @NumericFieldConstraint Double buyPrice;
-  @NumericFieldConstraint Double sellPrice;
+  Double buyQuantity;
+  Double sellQuantity;
+  Double buyPrice;
+  Double sellPrice;
   String benchmark;
   Timestamp tradeDate;
   String security;

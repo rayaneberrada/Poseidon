@@ -21,6 +21,12 @@ public class RatingController {
 
   private static Logger logger = LoggerFactory.getLogger(RatingController.class);
 
+  /**
+   * Method display a view containing a list of all ratings
+   *
+   * @param model
+   * @return rating/list view
+   */
   @RequestMapping("/rating/list")
   public String home(Model model) {
     logger.info("http://localhost:8080/rating/list");
@@ -28,12 +34,25 @@ public class RatingController {
     return "rating/list";
   }
 
+  /**
+   * @param rating
+   * @return view to add rating's in db
+   */
   @GetMapping("/rating/add")
   public String addRatingForm(Rating rating) {
     logger.info("http://localhost:8080/rating/add");
     return "rating/add";
   }
 
+  /**
+   * Method add rating in database if User creation respect constraints defined in the class, else
+   * return the view to add a new rating with an error message
+   *
+   * @param rating
+   * @param result
+   * @param model
+   * @return view /rating/list if success, else view rating/add
+   */
   @PostMapping("/rating/validate")
   public String validate(@Valid Rating rating, BindingResult result, Model model) {
     logger.info("http://localhost:8080/rating/validate");
@@ -56,6 +75,16 @@ public class RatingController {
     return "rating/update";
   }
 
+  /**
+   * Method modify rating informations in database and return the view of the list of ratings with
+   * the modifications if success, else return the update page with an error message
+   *
+   * @param id
+   * @param rating
+   * @param result
+   * @param model
+   * @return rating/update view if fails, else /rating/list view
+   */
   @PostMapping("/rating/update/{id}")
   public String updateRating(
       @PathVariable("id") Integer id, @Valid Rating rating, BindingResult result, Model model) {
@@ -71,6 +100,13 @@ public class RatingController {
     return "redirect:/rating/list";
   }
 
+  /**
+   * Method delete rating defined by it's id
+   *
+   * @param id
+   * @param model
+   * @return /rating/list view updated
+   */
   @GetMapping("/rating/delete/{id}")
   public String deleteRating(@PathVariable("id") Integer id, Model model) {
     logger.info("http://localhost:8080/rating/delete/" + id);

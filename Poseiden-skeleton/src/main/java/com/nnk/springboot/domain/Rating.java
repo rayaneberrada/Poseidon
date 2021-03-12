@@ -25,5 +25,5 @@ public class Rating {
   String moodysRating;
   String sandPRating;
   String fitchRating;
-  @NumericFieldConstraint Integer orderNumber;
+  Integer orderNumber;
 }
