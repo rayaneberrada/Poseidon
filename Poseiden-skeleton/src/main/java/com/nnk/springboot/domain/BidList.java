@@ -1,5 +1,6 @@
 package com.nnk.springboot.domain;
 
+import com.nnk.springboot.controllers.constraint.NumericFieldConstraint;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,10 +27,10 @@ public class BidList {
 
   String account;
   String type;
-  Double bidQuantity;
-  Double askQuantity;
-  Double bid;
-  Double ask;
+  @NumericFieldConstraint Double bidQuantity;
+  @NumericFieldConstraint Double askQuantity;
+  @NumericFieldConstraint Double bid;
+  @NumericFieldConstraint Double ask;
   String benchmark;
   Timestamp bidListDate;
   String commentary;

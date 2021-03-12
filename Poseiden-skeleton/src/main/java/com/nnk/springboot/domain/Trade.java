@@ -1,5 +1,6 @@
 package com.nnk.springboot.domain;
 
+import com.nnk.springboot.controllers.constraint.NumericFieldConstraint;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,10 +23,10 @@ public class Trade {
 
   String account;
   String type;
-  Double buyQuantity;
-  Double sellQuantity;
-  Double buyPrice;
-  Double sellPrice;
+  @NumericFieldConstraint Double buyQuantity;
+  @NumericFieldConstraint Double sellQuantity;
+  @NumericFieldConstraint Double buyPrice;
+  @NumericFieldConstraint Double sellPrice;
   String benchmark;
   Timestamp tradeDate;
   String security;

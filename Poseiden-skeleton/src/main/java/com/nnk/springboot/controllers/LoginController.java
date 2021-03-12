@@ -1,6 +1,8 @@
 package com.nnk.springboot.controllers;
 
 import com.nnk.springboot.repositories.UserRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +16,8 @@ public class LoginController {
 
   @Autowired private UserRepository userRepository;
 
+  private static Logger logger = LoggerFactory.getLogger(LoginController.class);
+
   @GetMapping("login")
   public ModelAndView login() {
     ModelAndView mav = new ModelAndView();
@@ -23,6 +27,7 @@ public class LoginController {
 
   @GetMapping("secure/article-details")
   public ModelAndView getAllUserArticles() {
+    logger.info("http://localhost:8080/secure/article-details");
     ModelAndView mav = new ModelAndView();
     mav.addObject("users", userRepository.findAll());
     mav.setViewName("user/list");

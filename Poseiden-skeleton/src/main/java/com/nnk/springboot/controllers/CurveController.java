@@ -2,6 +2,8 @@ package com.nnk.springboot.controllers;
 
 import com.nnk.springboot.domain.CurvePoint;
 import com.nnk.springboot.repositories.CurvePointRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,19 +19,24 @@ import javax.validation.Valid;
 public class CurveController {
   @Autowired CurvePointRepository curvePointRepository;
 
+  private static Logger logger = LoggerFactory.getLogger(CurveController.class);
+
   @RequestMapping("/curvePoint/list")
   public String home(Model model) {
+    logger.info("http://localhost:8080/curvePoint/list");
     model.addAttribute("curvePoints", curvePointRepository.findAll());
     return "curvePoint/list";
   }
 
   @GetMapping("/curvePoint/add")
-  public String addBidForm(CurvePoint bid) {
+  public String addCurveForm(CurvePoint bid) {
+    logger.info("http://localhost:8080/curvePoint/add");
     return "curvePoint/add";
   }
 
   @PostMapping("/curvePoint/validate")
   public String validate(@Valid CurvePoint curvePoint, BindingResult result, Model model) {
+    logger.info("http://localhost:8080/curvePoint/validate");
     if (!result.hasErrors()) {
       curvePointRepository.save(curvePoint);
       model.addAttribute("curvePoints", curvePointRepository.findAll());
@@ -40,6 +47,7 @@ public class CurveController {
 
   @GetMapping("/curvePoint/update/{id}")
   public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
+    logger.info("http://localhost:8080/curvePoint/update/" + id);
     CurvePoint curvePoint =
         curvePointRepository
             .findById(id)
@@ -49,11 +57,12 @@ public class CurveController {
   }
 
   @PostMapping("/curvePoint/update/{id}")
-  public String updateBid(
+  public String updateCurve(
       @PathVariable("id") Integer id,
       @Valid CurvePoint curvePoint,
       BindingResult result,
       Model model) {
+    logger.info("http://localhost:8080/curvePoint/update/" + id);
     if (result.hasErrors()) {
       return "curvePoints/update";
     }
@@ -65,7 +74,8 @@ public class CurveController {
   }
 
   @GetMapping("/curvePoint/delete/{id}")
-  public String deleteBid(@PathVariable("id") Integer id, Model model) {
+  public String deleteCurve(@PathVariable("id") Integer id, Model model) {
+    logger.info("http://localhost:8080/curvePoint/delete/" + id);
     CurvePoint curvePoint =
         curvePointRepository
             .findById(id)

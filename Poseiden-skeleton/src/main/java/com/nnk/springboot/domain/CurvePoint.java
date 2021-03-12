@@ -1,5 +1,6 @@
 package com.nnk.springboot.domain;
 
+import com.nnk.springboot.controllers.constraint.NumericFieldConstraint;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,9 +23,9 @@ public class CurvePoint {
   @Id
   Integer id;
 
-  Integer curveId;
+  @NumericFieldConstraint Integer curveId;
   Timestamp asOfDate;
-  Double term;
-  Double value;
+  @NumericFieldConstraint Double term;
+  @NumericFieldConstraint Double value;
   Timestamp creationDate;
 }

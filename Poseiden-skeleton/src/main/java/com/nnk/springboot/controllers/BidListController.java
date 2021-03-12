@@ -3,6 +3,8 @@ package com.nnk.springboot.controllers;
 import com.nnk.springboot.domain.BidList;
 import com.nnk.springboot.domain.User;
 import com.nnk.springboot.repositories.BidListRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,19 +20,24 @@ import javax.validation.Valid;
 public class BidListController {
   @Autowired BidListRepository bidListRepository;
 
+  private static Logger logger = LoggerFactory.getLogger(BidListController.class);
+
   @RequestMapping("/bidList/list")
   public String home(Model model) {
+    logger.info("http://localhost:8080/bidList/list");
     model.addAttribute("bids", bidListRepository.findAll());
     return "bidList/list";
   }
 
   @GetMapping("/bidList/add")
   public String addBidForm(BidList bid) {
+    logger.info("http://localhost:8080/bidList.add");
     return "bidList/add";
   }
 
   @PostMapping("/bidList/validate")
   public String validate(@Valid BidList bid, BindingResult result, Model model) {
+    logger.info("http://localhost:8080/bidList/validate");
     if (!result.hasErrors()) {
       bidListRepository.save(bid);
       model.addAttribute("bids", bidListRepository.findAll());
@@ -41,6 +48,7 @@ public class BidListController {
 
   @GetMapping("/bidList/update/{id}")
   public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
+    logger.info("http://localhost:8080/bidList/update/" + id);
     BidList bid =
         bidListRepository
             .findById(id)
@@ -52,6 +60,7 @@ public class BidListController {
   @PostMapping("/bidList/update/{id}")
   public String updateBid(
       @PathVariable("id") Integer id, @Valid BidList bidList, BindingResult result, Model model) {
+    logger.info("http://localhost:8080/bidList/update/" + id);
     if (result.hasErrors()) {
       return "bidlist/update";
     }
@@ -63,7 +72,8 @@ public class BidListController {
   }
 
   @GetMapping("/bidList/delete/{id}")
-  public String deleteUser(@PathVariable("id") Integer id, Model model) {
+  public String deleteBid(@PathVariable("id") Integer id, Model model) {
+    logger.info("http://localhost:8080/bidList/delete/" + id);
     BidList bid =
         bidListRepository
             .findById(id)

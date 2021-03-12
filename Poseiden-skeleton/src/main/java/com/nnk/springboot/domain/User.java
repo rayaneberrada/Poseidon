@@ -1,5 +1,6 @@
 package com.nnk.springboot.domain;
 
+import com.nnk.springboot.controllers.constraint.PasswordFieldConstraint;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,6 +27,7 @@ public class User implements UserDetails {
   private String username;
 
   @NotBlank(message = "Password is mandatory")
+  @PasswordFieldConstraint
   private String password;
 
   @NotBlank(message = "FullName is mandatory")

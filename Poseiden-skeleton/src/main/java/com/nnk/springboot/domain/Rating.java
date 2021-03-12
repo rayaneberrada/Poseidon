@@ -1,5 +1,6 @@
 package com.nnk.springboot.domain;
 
+import com.nnk.springboot.controllers.constraint.NumericFieldConstraint;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,5 +25,5 @@ public class Rating {
   String moodysRating;
   String sandPRating;
   String fitchRating;
-  Integer orderNumber;
+  @NumericFieldConstraint Integer orderNumber;
 }

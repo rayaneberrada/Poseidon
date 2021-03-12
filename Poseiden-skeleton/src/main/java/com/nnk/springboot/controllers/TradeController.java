@@ -2,6 +2,8 @@ package com.nnk.springboot.controllers;
 
 import com.nnk.springboot.domain.Trade;
 import com.nnk.springboot.repositories.TradeRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,19 +19,24 @@ import javax.validation.Valid;
 public class TradeController {
   @Autowired private TradeRepository tradeRepository;
 
+  private static Logger logger = LoggerFactory.getLogger(TradeController.class);
+
   @RequestMapping("/trade/list")
   public String home(Model model) {
+    logger.info("http://localhost:8080/trade/list");
     model.addAttribute("trades", tradeRepository.findAll());
     return "trade/list";
   }
 
   @GetMapping("/trade/add")
   public String addUser(Trade bid) {
+    logger.info("http://localhost:8080/trade/add");
     return "trade/add";
   }
 
   @PostMapping("/trade/validate")
   public String validate(@Valid Trade trade, BindingResult result, Model model) {
+    logger.info("http://localhost:8080/trade/validate");
     if (!result.hasErrors()) {
       tradeRepository.save(trade);
       model.addAttribute("trades", tradeRepository.findAll());
@@ -40,6 +47,7 @@ public class TradeController {
 
   @GetMapping("/trade/update/{id}")
   public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
+    logger.info("http://localhost:8080/trade/update/" + id);
     Trade trade =
         tradeRepository
             .findById(id)
@@ -51,6 +59,7 @@ public class TradeController {
   @PostMapping("/trade/update/{id}")
   public String updateTrade(
       @PathVariable("id") Integer id, @Valid Trade trade, BindingResult result, Model model) {
+    logger.info("http://localhost:8080/trade/update/" + id);
     if (result.hasErrors()) {
       return "trade/update";
     }
@@ -63,6 +72,7 @@ public class TradeController {
 
   @GetMapping("/trade/delete/{id}")
   public String deleteTrade(@PathVariable("id") Integer id, Model model) {
+    logger.info("http://localhost:8080/trade/delete/" + id);
     Trade trade =
         tradeRepository
             .findById(id)
