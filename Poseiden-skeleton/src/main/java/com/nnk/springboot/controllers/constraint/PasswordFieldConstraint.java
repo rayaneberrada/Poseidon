@@ -12,7 +12,7 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface PasswordFieldConstraint {
   String message() default
-      "Field should have one Upper case character, at least 8 characters and at least one number and special character";
+      "Field should have at least one Upper case character, 8 characters and one number and a special character";
 
   Class<?>[] groups() default {};
 

@@ -75,16 +75,6 @@ public class TradeControllerTestIT {
   }
 
   @Test
-  public void Get_ShowUpdatedForm_WithSuccess() throws Exception {
-    mockMvc
-        .perform(
-            get("/trade/update/{id}", 1)
-                .with(SecurityMockMvcRequestPostProcessors.httpBasic("demo", "demo")))
-        .andExpect(status().isOk())
-        .andExpect(view().name("trade/update"));
-  }
-
-  @Test
   public void Post_UpdatedForm_WithSuccess() throws Exception {
     mockMvc
         .perform(
@@ -112,6 +102,17 @@ public class TradeControllerTestIT {
                 .with(csrf()))
         .andExpect(status().is3xxRedirection())
         .andExpect(view().name("redirect:/trade/list"));
+  }
+
+  @Test
+  public void Get_ShowUpdatedForm_WithSuccess() throws Exception {
+    List<Trade> trades = tradeRepository.findAll();
+    mockMvc
+        .perform(
+            get("/trade/update/{id}", trades.get(trades.size() - 1).getTradeId())
+                .with(SecurityMockMvcRequestPostProcessors.httpBasic("demo", "demo")))
+        .andExpect(status().isOk())
+        .andExpect(view().name("trade/update"));
   }
 
   @Test

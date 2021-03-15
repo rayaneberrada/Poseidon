@@ -50,13 +50,13 @@ public class RatingControllerTestIT {
         .perform(
             post("/rating/validate")
                 .param("moodysRating", "failBecauseNumber")
-                .param("sandPRating", "1010")
-                .param("fitchRating", "100")
+                .param("sandPRating", "notnumber")
+                .param("fitchRating", "notnumber")
                 .param("orderNumber", "100")
                 .with(SecurityMockMvcRequestPostProcessors.httpBasic("demo", "demo"))
                 .with(csrf()))
-        .andExpect(status().is3xxRedirection())
-        .andExpect(view().name("redirect:/rating/list"));
+        .andExpect(status().isOk())
+        .andExpect(view().name("rating/add"));
   }
 
   @Test
@@ -72,16 +72,6 @@ public class RatingControllerTestIT {
                 .with(csrf()))
         .andExpect(status().is3xxRedirection())
         .andExpect(view().name("redirect:/rating/list"));
-  }
-
-  @Test
-  public void Get_ShowUpdatedForm_WithSuccess() throws Exception {
-    mockMvc
-        .perform(
-            get("/rating/update/{id}", 2)
-                .with(SecurityMockMvcRequestPostProcessors.httpBasic("demo", "demo")))
-        .andExpect(status().isOk())
-        .andExpect(view().name("rating/update"));
   }
 
   @Test
@@ -110,8 +100,19 @@ public class RatingControllerTestIT {
                 .param("orderNumber", "100")
                 .with(SecurityMockMvcRequestPostProcessors.httpBasic("demo", "demo"))
                 .with(csrf()))
-        .andExpect(status().is3xxRedirection())
-        .andExpect(view().name("redirect:/rating/list"));
+        .andExpect(status().isOk())
+        .andExpect(view().name("rating/update"));
+  }
+
+  @Test
+  public void Get_ShowUpdatedForm_WithSuccess() throws Exception {
+    List<Rating> rating = ratingRepository.findAll();
+    mockMvc
+        .perform(
+            get("/rating/update/{id}", rating.get(rating.size() - 1).getId())
+                .with(SecurityMockMvcRequestPostProcessors.httpBasic("demo", "demo")))
+        .andExpect(status().isOk())
+        .andExpect(view().name("rating/update"));
   }
 
   @Test

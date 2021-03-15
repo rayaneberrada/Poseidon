@@ -78,16 +78,6 @@ public class RuleNameControllerTestIT {
   }
 
   @Test
-  public void Get_ShowUpdatedForm_WithSuccess() throws Exception {
-    mockMvc
-        .perform(
-            get("/ruleName/update/{id}", 1)
-                .with(SecurityMockMvcRequestPostProcessors.httpBasic("demo", "demo")))
-        .andExpect(status().isOk())
-        .andExpect(view().name("ruleName/update"));
-  }
-
-  @Test
   public void Post_UpdatedForm_WithSuccess() throws Exception {
     mockMvc
         .perform(
@@ -115,6 +105,18 @@ public class RuleNameControllerTestIT {
                 .with(csrf()))
         .andExpect(status().is3xxRedirection())
         .andExpect(view().name("redirect:/ruleName/list"));
+  }
+
+  @Test
+  public void Get_ShowUpdatedForm_WithSuccess() throws Exception {
+    List<RuleName> rule = ruleNameRepository.findAll();
+
+    mockMvc
+        .perform(
+            get("/ruleName/update/{id}", rule.get(rule.size() - 1).getId())
+                .with(SecurityMockMvcRequestPostProcessors.httpBasic("demo", "demo")))
+        .andExpect(status().isOk())
+        .andExpect(view().name("ruleName/update"));
   }
 
   @Test

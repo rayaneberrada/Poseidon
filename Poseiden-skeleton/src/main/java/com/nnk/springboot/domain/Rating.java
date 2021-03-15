@@ -22,8 +22,8 @@ public class Rating {
   @Id
   Integer id;
 
-  String moodysRating;
-  String sandPRating;
-  String fitchRating;
+  @NumericFieldConstraint String moodysRating;
+  @NumericFieldConstraint String sandPRating;
+  @NumericFieldConstraint String fitchRating;
   Integer orderNumber;
 }

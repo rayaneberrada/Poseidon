@@ -104,6 +104,17 @@ public class BidListControllerTestIT {
   }
 
   @Test
+  public void Get_ShowUpdatedForm_WithSuccess() throws Exception {
+    List<BidList> bids = bidListRepository.findAll();
+    mockMvc
+        .perform(
+            get("/bidList/update/{id}", bids.get(bids.size() - 1).getBidListId())
+                .with(SecurityMockMvcRequestPostProcessors.httpBasic("demo", "demo")))
+        .andExpect(status().isOk())
+        .andExpect(view().name("bidList/update"));
+  }
+
+  @Test
   public void Get_DeleteBid_WithSuccess() throws Exception {
     List<BidList> bids = bidListRepository.findAll();
     mockMvc
@@ -112,15 +123,5 @@ public class BidListControllerTestIT {
                 .with(SecurityMockMvcRequestPostProcessors.httpBasic("demo", "demo")))
         .andExpect(status().is3xxRedirection())
         .andExpect(view().name("redirect:/bidList/list"));
-  }
-
-  @Test
-  public void Get_ShowUpdatedForm_WithSuccess() throws Exception {
-    mockMvc
-        .perform(
-            get("/bidList/update/{id}", 1)
-                .with(SecurityMockMvcRequestPostProcessors.httpBasic("demo", "demo")))
-        .andExpect(status().isOk())
-        .andExpect(view().name("bidList/update"));
   }
 }

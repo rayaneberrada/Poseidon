@@ -18,9 +18,9 @@ public class PasswordFieldValidator
   @Override
   public boolean isValid(String s, ConstraintValidatorContext constraintValidatorContext) {
     return s != null
-        && s.matches("(.*[A-Z].*)+  ")
-        && (s.length() > 8)
-        && s.matches("(.*[0-9].*)+ ")
-        && s.matches("(.*[-_$#].*)+");
+        && s.matches(".*[A-Z]+.*")
+        && (s.length() >= 8)
+        && s.matches(".*[0-9]+.*")
+        && s.matches(".*\\W.*");
   }
 }
